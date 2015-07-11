@@ -7,10 +7,11 @@ $(function(){
     rooms: {},
     lastObjectId: null,
     // Chatterbox methods:
-    init: function(){
+    init: function(view){
+      app.view = view;
       console.log('app.init()');
       // start getting message
-      setInterval(app.fetch.bind(app),3077);
+      setInterval(app.fetch.bind(app),377);
     },
     send: function(message){
       $.ajax({
@@ -38,8 +39,7 @@ $(function(){
         data: { order: '-createdAt' },
         contentType: 'application/json',
         success: function (data) {
-          // call displayMessages on data.results
-          //update list of rooms
+          app.displayMessages(data.results);
           //console.log('chatterbox: Message recevied',data);
         },
         error: function (data) {
@@ -48,13 +48,31 @@ $(function(){
         }
       });
     },
+    messages: [],
     // input for displayMessages is an array of 100 objects
     displayMessages: function(messages) {
-      // create list of unique room names
+      // save first message's objectId for later.
+      var firstObjectId = messages[0].objectId;
+      app.messages = [];
+      // iterate over messages
+      for (var i = 0; i < messages.length; i++) {
+        var message = messages[i];
+        // update rooms
+        app.rooms[message.roomname] = 1;
 
-      //filter messages by room
-      //filter by existing message
-      //append new messages
+        // if we have seen this message before, break
+        if(app.lastObjectId === message.objectId){
+          break;
+        }
+        //append new messages
+        app.messages.push(message);
+      };
+      // console.log(app.messages);
+      // update sentinal
+      app.lastObjectId = firstObjectId;
+
+      // call view update method on newMessages.
+      app.view.update(app);
     },
     examineAPI: function(){
       $.ajax({

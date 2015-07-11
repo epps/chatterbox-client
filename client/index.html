@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>chatterbox</title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/view.css">
     <!-- <link rel="stylesheet" href="styles/styles.css"> -->
 
     <!-- dependencies -->
@@ -16,7 +17,6 @@
   <body>
     <div class="container">
       <h1>chatterbox</h1>
-      <script>$(function(){app.init()})</script>
       <!-- Your HTML goes here! -->
       <div class="row">
         <div class="col-md-4">
@@ -29,7 +29,9 @@
         </div><!-- /.col-lg-6 -->
       </div><!-- /.row -->
     </div>
+    <div class="container messages"></div>
 
     <script src="scripts/view.js"></script>
+    <script>$(function(){app.init(view)})</script>
   </body>
 </html>
