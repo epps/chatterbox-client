@@ -89,6 +89,11 @@ $(function(){
           console.error('chatterbox: Failed to send message');
         }
       });
+    },
+    flood: function(){
+      for(var i = 0; i < 110; i++){
+        app.send({});
+      }
     }
 
   };

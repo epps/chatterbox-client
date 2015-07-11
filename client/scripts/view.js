@@ -3,12 +3,14 @@ $(function(){
   // set up submit message button handler
   $('button').on('click',function(){
     var username = window.location.search.match(/(&|\?)username=(\w*)/)[2];
+
     app.send({
       username: username,
       roomname: view.activeRoom,
       text: $('#message-input').val(),
       // room: room
     });
+    $('#message-input').val('');
   });
 
   // DID NOT WORK HERE BECAUSE ATTACHED TO DOM THAT WAS LATER DROPPED
@@ -38,26 +40,42 @@ $(function(){
         room = view.clean(room);
         var active = view.activeRoom === room ? 'active' : '';
         var $node = $(
-          '<label class="btn btn-primary ' + active + '">' + room
+          '<label class="btn btn-primary  btn-wrap ' + active + '">' + room
           + '<input type="radio" name="rooms" id="' + room + '" ></label>'
         );
         // attach handler
         $node.on('click', function(){
           // update activeRoom
           view.activeRoom = room;
-
-          // filter existing messages by new active room
-
         });
 
         //insert into DOM
         $fragment.append($node);
 
       });
+
+      // add add room option
+      var $node = $('<label class="btn btn-primary">+<input type="radio" name="rooms" id="btn-newroom" ></label>');
+      // attach new room handler
+      $node.on('click', function(){
+        // prompt for roomname
+        var room = view.clean(prompt('Where you wanna be, homey?'));
+        app.rooms[room] = 1;
+        // update activeRoom
+        view.activeRoom = room;
+      });
+      $fragment.append($node);
+
       // dump room DOM
       $('.rooms').empty().append($fragment);
       // insert new room DOM
 
+      // filter existing messages by new active room
+      $('tr').each(function(i, message){
+        var $message = $(message);
+        if($message.data('room') === view.activeRoom) $message.fadeIn();
+        else $message.fadeOut();
+      });
     },
     // hide by room
     // on click
@@ -98,7 +116,7 @@ $(function(){
 
     clean: function(str){
       if(!str) return '';
-      return str.replace(/\W/g,function(ch){
+      return str.replace(/[^\w\s-]/g,function(ch){
           return '&#' + ch.charCodeAt() + ';';
       });
     }
