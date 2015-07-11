@@ -3,18 +3,33 @@
   <head>
     <meta charset="utf-8">
     <title>chatterbox</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="styles/styles.css"> -->
 
     <!-- dependencies -->
     <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
   </head>
   <body>
-    <div id="main">
+    <div class="container">
       <h1>chatterbox</h1>
+      <script>$(function(){app.init()})</script>
       <!-- Your HTML goes here! -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="What's on your mind?">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Let it out</button>
+            </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+      </div><!-- /.row -->
     </div>
+
+    <script src="scripts/view.js"></script>
   </body>
 </html>
