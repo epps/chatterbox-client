@@ -11,7 +11,7 @@ $(function(){
       app.view = view;
       console.log('app.init()');
       // start getting message
-      setInterval(app.fetch.bind(app),377);
+      setInterval(app.fetch.bind(app),3000);
     },
     send: function(message){
       $.ajax({

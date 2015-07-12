@@ -18,3 +18,17 @@
 
   /*text-overflow: ellipsis;*/
 }
+body {
+  background: transparent !important;
+}
+html {
+  background: url(../images/panorama.jpg);
+  /*background-size: auto 100%;*/
+  background-repeat: no-repeat;
+  background-position: top left;
+  animation: background-panorama 300s infinite;
+}
+
+@keyframes background-panorama {
+  50% {background-position: top center;}
+}
